@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Login from './Login';
 import Cadastro from './Cadastro';
-import Dashboard from './Dashboard'; // <--- Agora estamos importando o arquivo novo!
+import Dashboard from './Dashboard';
 
 // Componente para proteger rotas privadas
 const RotaPrivada = ({ children }) => {
@@ -17,7 +17,7 @@ function App() {
         <Route path="/" element={<Login />} />
         <Route path="/cadastro" element={<Cadastro />} />
         
-        {/* Rota Protegida: Agora mostra a Dashboard real */}
+        {/* Dashboard real */}
         <Route path="/dashboard" element={
           <RotaPrivada>
             <Dashboard />

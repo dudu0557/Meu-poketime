@@ -22,23 +22,32 @@ const Login = () => {
 
   return (
     <div className="auth-container">
-      <h2>Acesse seu Time</h2>
-      <br/>
+      {/* IMAGEM DO LOGO */}
+      <img 
+        src="https://raw.githubusercontent.com/PokeAPI/media/master/logo/pokeapi_256.png" 
+        alt="Logo Pokémon" 
+        className="login-logo"
+      />
+      
+      {/* TÍTULO ESTILIZADO */}
+      <h2 className="auth-title">Acesse seu Time</h2>
+      
       <form onSubmit={formik.handleSubmit}>
         <input 
           type="email" 
-          placeholder="E-mail"
+          placeholder="E-mail de Treinador"
           {...formik.getFieldProps('email')} 
         />
         <input 
           type="password" 
-          placeholder="Senha"
+          placeholder="Senha Secreta"
           {...formik.getFieldProps('senha')} 
         />
-        <button type="submit" className="btn-primary">Entrar</button>
+        <button type="submit" className="btn-primary">Entrar na Aventura</button>
       </form>
+      
       <br/>
-      <p>Não tem conta? <Link to="/cadastro">Cadastre-se</Link></p>
+      <p>Novo por aqui? <Link to="/cadastro" style={{fontWeight: 'bold'}}>Criar Pokedéx</Link></p>
     </div>
   );
 };

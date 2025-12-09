@@ -28,10 +28,11 @@ const Cadastro = () => {
 
   return (
     <div className="auth-container">
-      <h2>Crie sua conta</h2>
+      {/* TÍTULO ESTILIZADO IGUAL AO LOGIN */}
+      <h2 className="auth-title">Torne-se um Mestre</h2>
       <br/>
       <form onSubmit={formik.handleSubmit}>
-        <input type="text" placeholder="Usuário" {...formik.getFieldProps('usuario')} />
+        <input type="text" placeholder="Nome de Treinador" {...formik.getFieldProps('usuario')} />
         {formik.touched.usuario && formik.errors.usuario ? <small style={{color:'var(--danger)'}}>{formik.errors.usuario}</small> : null}
 
         <input type="email" placeholder="E-mail" {...formik.getFieldProps('email')} />
@@ -43,10 +44,10 @@ const Cadastro = () => {
         <input type="password" placeholder="Confirmar Senha" {...formik.getFieldProps('confirmacaoSenha')} />
         {formik.touched.confirmacaoSenha && formik.errors.confirmacaoSenha ? <small style={{color:'var(--danger)'}}>{formik.errors.confirmacaoSenha}</small> : null}
 
-        <button type="submit" className="btn-primary">Cadastrar</button>
+        <button type="submit" className="btn-primary">Iniciar Jornada</button>
       </form>
       <br/>
-      <p>Já tem conta? <Link to="/">Fazer Login</Link></p>
+      <p>Já é um mestre? <Link to="/" style={{fontWeight: 'bold'}}>Fazer Login</Link></p>
     </div>
   );
 };

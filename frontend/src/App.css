@@ -1,12 +1,14 @@
-/* RESET E FUNDO GLOBAL */
+/* =========================================================
+   ESTILOS GERAIS (Variáveis e Reset)
+   ========================================================= */
 :root {
-  --bg-color: #121214;
-  --surface-color: #202024;
-  --text-color: #e1e1e6;
-  --primary: #8257e6; /* Roxo */
+  --bg-color: #121214;       /* Fundo quase preto */
+  --surface-color: #202024;  /* Cinza escuro para cards */
+  --text-color: #e1e1e6;     /* Texto claro */
+  --primary: #8257e6;        /* Roxo (Cor principal) */
   --primary-hover: #9466ff;
-  --danger: #e54c4c; /* Vermelho */
-  --success: #04d361; /* Verde */
+  --danger: #e54c4c;         /* Vermelho (Erro/Deletar) */
+  --success: #04d361;        /* Verde (Sucesso/Adicionar) */
 }
 
 * {
@@ -26,16 +28,12 @@ body {
   padding-top: 40px;
 }
 
-/* LINKS */
-a {
-  color: var(--primary);
-  text-decoration: none;
-}
-a:hover {
-  text-decoration: underline;
-}
+a { color: var(--primary); text-decoration: none; }
+a:hover { text-decoration: underline; }
 
-/* INPUTS E FORMULÁRIOS */
+/* =========================================================
+   COMPONENTES DE FORMULÁRIO (Inputs e Botões)
+   ========================================================= */
 input {
   width: 100%;
   padding: 12px;
@@ -47,12 +45,8 @@ input {
   font-size: 16px;
   outline: none;
 }
+input:focus { border-color: var(--primary); }
 
-input:focus {
-  border-color: var(--primary);
-}
-
-/* BOTÕES GERAIS */
 button {
   padding: 10px 20px;
   border: none;
@@ -63,19 +57,16 @@ button {
   font-size: 14px;
 }
 
-.btn-primary {
-  background-color: var(--primary);
-  color: white;
-  width: 100%;
-  margin-top: 10px;
-}
+.btn-primary { background-color: var(--primary); color: white; width: 100%; margin-top: 10px; }
 .btn-primary:hover { background-color: var(--primary-hover); }
 
-.btn-add { background-color: var(--success); color: white; width: 100%; margin-top: 10px;}
+.btn-add { background-color: var(--success); color: white; width: 100%; margin-top: 10px; }
 .btn-delete { background-color: var(--danger); color: white; }
-.btn-edit { background-color: #323238; color: white; margin-right: 5px;}
+.btn-edit { background-color: #323238; color: white; margin-right: 5px; }
 
-/* CONTAINER CENTRAL (LOGIN/CADASTRO) */
+/* =========================================================
+   TELA DE LOGIN E CADASTRO (Tema Pokémon)
+   ========================================================= */
 .auth-container {
   background-color: var(--surface-color);
   padding: 40px;
@@ -86,7 +77,30 @@ button {
   text-align: center;
 }
 
-/* DASHBOARD */
+/* Logo com Brilho */
+.login-logo {
+  max-width: 200px;
+  width: 100%;
+  margin-bottom: 20px;
+  filter: drop-shadow(0 0 15px rgba(255, 203, 5, 0.6));
+  transition: transform 0.3s;
+}
+.login-logo:hover { transform: scale(1.05); }
+
+/* Título Estilizado (Amarelo e Azul) */
+.auth-title {
+  font-size: 28px;
+  font-weight: 900;
+  color: #ffcb05;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-shadow: 3px 3px 0px #2a75bb, -1px -1px 0 #2a75bb, 1px -1px 0 #2a75bb, -1px 1px 0 #2a75bb, 1px 1px 0 #2a75bb;
+  margin-bottom: 20px;
+}
+
+/* =========================================================
+   DASHBOARD E LISTAGEM
+   ========================================================= */
 .dashboard-container {
   max-width: 1000px;
   width: 90%;
@@ -102,6 +116,7 @@ button {
   border-bottom: 1px solid #323238;
 }
 
+/* Área de Busca */
 .search-box {
   background-color: var(--surface-color);
   padding: 20px;
@@ -111,14 +126,9 @@ button {
   flex-direction: column;
   align-items: center;
 }
+.search-form { display: flex; gap: 10px; width: 100%; max-width: 500px; }
 
-.search-form {
-  display: flex;
-  gap: 10px;
-  width: 100%;
-  max-width: 500px;
-}
-
+/* Card de Resultado (Pré-visualização) */
 .pokemon-result {
   margin-top: 20px;
   background-color: #29292e;
@@ -128,10 +138,10 @@ button {
   animation: fadeIn 0.5s;
 }
 
-/* GRID DE POKEMONS */
+/* Grid do Time (Cards) */
 .pokemon-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  /* O grid-template-columns é controlado via React inline style */
+  display: grid; 
   gap: 20px;
 }
 
@@ -143,30 +153,23 @@ button {
   transition: transform 0.2s;
   border: 1px solid transparent;
 }
-
 .pokemon-card:hover {
   transform: translateY(-5px);
   border-color: var(--primary);
 }
 
 .pokemon-card img {
-  width: 100px;
-  height: 100px;
-  object-fit: contain;
+  width: 100px; height: 100px; object-fit: contain;
 }
-
 .pokemon-card h4 {
-  margin: 10px 0;
-  text-transform: capitalize;
+  margin: 10px 0; text-transform: capitalize;
 }
 
 .card-actions {
-  display: flex;
-  justify-content: center;
-  gap: 5px;
-  margin-top: 10px;
+  display: flex; justify-content: center; gap: 5px; margin-top: 10px;
 }
 
+/* Animação suave de entrada */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }

@@ -1,181 +1,201 @@
+// =========================================================
+//  BACKEND - PROJETO FINAL: MEU POKÉTIME
+//  Tecnologias: Node.js, Express, FileSystem (fs), JWT
+// =========================================================
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const fs = require('fs');
 const path = require('path');
-const { v4: uuidv4 } = require('uuid'); // Para gerar IDs únicos
+const { v4: uuidv4 } = require('uuid'); // Gera IDs únicos
 const jwt = require('jsonwebtoken');
 
 const app = express();
 const PORT = 3000;
-const SECRET_KEY = 'minha_chave_secreta_super_segura'; // Usado para assinar o token
+const SECRET_KEY = 'chave_secreta_projeto_final'; // Segredo para assinar o token
 
-// Configurações
-app.use(cors());
+// --- 1. CONFIGURAÇÕES GERAIS ---
+app.use(cors()); // Permite conexão do Frontend (porta 5173)
 app.use(bodyParser.json());
 
-// --- FUNÇÕES AUXILIARES (Para ler e escrever nos arquivos) ---
+// --- 2. FUNÇÕES AUXILIARES (Simulando Banco de Dados) ---
 
-// Função para ler dados do arquivo JSON
-const lerDados = (arquivo) => {
-    const caminho = path.join(__dirname, 'dados', arquivo);
+// Função genérica para ler arquivos JSON na pasta 'dados'
+const lerBancoDeDados = (nomeArquivo) => {
+    const caminho = path.join(__dirname, 'dados', nomeArquivo);
     try {
-        const dados = fs.readFileSync(caminho, 'utf8');
-        return JSON.parse(dados);
+        const conteudo = fs.readFileSync(caminho, 'utf8');
+        return JSON.parse(conteudo);
     } catch (error) {
-        return []; // Se der erro ou arquivo não existir, retorna lista vazia
+        return []; // Retorna lista vazia se arquivo não existir
     }
 };
 
-// Função para salvar dados no arquivo JSON
-const salvarDados = (arquivo, dados) => {
-    const caminho = path.join(__dirname, 'dados', arquivo);
+// Função genérica para salvar dados no arquivo JSON
+const salvarNoBancoDeDados = (nomeArquivo, dados) => {
+    const caminho = path.join(__dirname, 'dados', nomeArquivo);
     fs.writeFileSync(caminho, JSON.stringify(dados, null, 2));
 };
 
-// --- ROTAS PÚBLICAS (Qualquer um acessa) ---
+// --- 3. MIDDLEWARE DE SEGURANÇA (O Porteiro) ---
+// Verifica se o usuário tem um Token válido antes de deixar acessar rotas privadas
+const verificarToken = (req, res, next) => {
+    const tokenHeader = req.headers['authorization'];
+    
+    if (!tokenHeader) {
+        return res.status(401).json({ message: 'Acesso negado: Token não fornecido.' });
+    }
 
-// Rota de Teste
-app.get('/', (req, res) => {
-    res.send('Servidor do Projeto Final está rodando!');
-});
+    const token = tokenHeader.split(' ')[1]; // Remove o prefixo "Bearer "
 
-// Rota de Cadastro de Usuário
+    jwt.verify(token, SECRET_KEY, (erro, decodificado) => {
+        if (erro) {
+            return res.status(403).json({ message: 'Acesso negado: Token inválido.' });
+        }
+        // Salva o ID do usuário na requisição para usar nas próximas rotas
+        req.usuarioId = decodificado.id;
+        next(); // Pode passar!
+    });
+};
+
+// =========================================================
+//  ROTAS PÚBLICAS (Login e Cadastro)
+// =========================================================
+
+// Rota de Cadastro
 app.post('/cadastro', (req, res) => {
     const { usuario, email, senha, confirmacaoSenha } = req.body;
-    const usuarios = lerDados('usuarios.json');
+    const listaUsuarios = lerBancoDeDados('usuarios.json');
 
-    // Validações Básicas
-    if (!usuario || !email || !senha || !confirmacaoSenha) {
-        return res.status(400).json({ message: 'Todos os campos são obrigatórios.' });
+    // Validações básicas
+    if (!usuario || !email || !senha) {
+        return res.status(400).json({ message: 'Preencha todos os campos.' });
     }
     if (senha !== confirmacaoSenha) {
-        return res.status(400).json({ message: 'Senhas não conferem.' });
+        return res.status(400).json({ message: 'As senhas não conferem.' });
     }
-    if (senha.length < 4) {
-        return res.status(400).json({ message: 'A senha deve ter no mínimo 4 dígitos.' });
-    }
-    // Verifica se e-mail já existe
-    const usuarioExiste = usuarios.find(u => u.email === email);
-    if (usuarioExiste) {
-        return res.status(400).json({ message: 'E-mail já cadastrado.' });
+    
+    // Verifica duplicidade
+    const emailJaExiste = listaUsuarios.find(u => u.email === email);
+    if (emailJaExiste) {
+        return res.status(400).json({ message: 'Este e-mail já está cadastrado.' });
     }
 
-    // Salva o usuário
-    const novoUsuario = { id: uuidv4(), usuario, email, senha }; 
-    usuarios.push(novoUsuario);
-    salvarDados('usuarios.json', usuarios);
+    // Cria e salva o novo usuário
+    const novoUsuario = { id: uuidv4(), usuario, email, senha };
+    listaUsuarios.push(novoUsuario);
+    salvarNoBancoDeDados('usuarios.json', listaUsuarios);
 
-    res.status(201).json({ message: 'Usuário cadastrado com sucesso!' });
+    res.status(201).json({ message: 'Usuário criado com sucesso!' });
 });
 
 // Rota de Login
 app.post('/login', (req, res) => {
     const { email, senha } = req.body;
-    const usuarios = lerDados('usuarios.json');
+    const listaUsuarios = lerBancoDeDados('usuarios.json');
 
-    const usuarioEncontrado = usuarios.find(u => u.email === email && u.senha === senha);
+    const usuarioEncontrado = listaUsuarios.find(u => u.email === email && u.senha === senha);
 
     if (!usuarioEncontrado) {
-        return res.status(401).json({ message: 'E-mail ou senha inválidos.' });
+        return res.status(401).json({ message: 'E-mail ou senha incorretos.' });
     }
 
-    // Gera o Token
-    const token = jwt.sign({ id: usuarioEncontrado.id, email: usuarioEncontrado.email }, SECRET_KEY, { expiresIn: '1h' });
+    // Gera o Token JWT (O "Crachá" de acesso)
+    const token = jwt.sign(
+        { id: usuarioEncontrado.id, email: usuarioEncontrado.email },
+        SECRET_KEY,
+        { expiresIn: '1h' }
+    );
 
-    res.json({ message: 'Login realizado!', token, usuario: usuarioEncontrado.usuario });
+    res.json({ 
+        message: 'Login realizado!', 
+        token, 
+        usuario: usuarioEncontrado.usuario 
+    });
 });
 
-// --- MIDDLEWARE DE AUTENTICAÇÃO ---
-const autenticar = (req, res, next) => {
-    const tokenHeader = req.headers['authorization'];
-    if (!tokenHeader) return res.status(401).json({ message: 'Token não fornecido.' });
+// =========================================================
+//  ROTAS PRIVADAS (CRUD de Pokémons e Usuário)
+//  Todas usam o middleware 'verificarToken'
+// =========================================================
 
-    const token = tokenHeader.split(' ')[1]; // Remove o "Bearer " do início
-
-    jwt.verify(token, SECRET_KEY, (err, decoded) => {
-        if (err) return res.status(403).json({ message: 'Token inválido.' });
-        req.usuarioId = decoded.id;
-        next();
-    });
-};
-
-// --- ROTAS PRIVADAS (CRUD do Time Pokémon) ---
-
-// LISTAR (Read)
-app.get('/pokemons', autenticar, (req, res) => {
-    const time = lerDados('time.json');
-    const meusPokemons = time.filter(p => p.usuarioId === req.usuarioId);
+// [R] READ - Listar Pokémons do usuário logado
+app.get('/pokemons', verificarToken, (req, res) => {
+    const todosPokemons = lerBancoDeDados('time.json');
+    // Filtra apenas os pokémons que pertencem a quem está logado
+    const meusPokemons = todosPokemons.filter(p => p.usuarioId === req.usuarioId);
     res.json(meusPokemons);
 });
 
-// ADICIONAR (Create)
-app.post('/pokemons', autenticar, (req, res) => {
+// [C] CREATE - Adicionar novo Pokémon
+app.post('/pokemons', verificarToken, (req, res) => {
     const { nome, apelido, imagem } = req.body;
-    const time = lerDados('time.json');
+    const todosPokemons = lerBancoDeDados('time.json');
 
     const novoPokemon = {
         id: uuidv4(),
-        usuarioId: req.usuarioId,
+        usuarioId: req.usuarioId, // Vincula ao usuário logado
         nome,
         apelido,
         imagem
     };
 
-    time.push(novoPokemon);
-    salvarDados('time.json', time);
+    todosPokemons.push(novoPokemon);
+    salvarNoBancoDeDados('time.json', todosPokemons);
     res.status(201).json(novoPokemon);
 });
 
-// REMOVER (Delete)
-app.delete('/pokemons/:id', autenticar, (req, res) => {
+// [U] UPDATE - Atualizar Apelido do Pokémon
+app.put('/pokemons/:id', verificarToken, (req, res) => {
     const { id } = req.params;
-    let time = lerDados('time.json');
+    const { apelido } = req.body;
+    let todosPokemons = lerBancoDeDados('time.json');
 
-    const timeAtualizado = time.filter(p => p.id !== id);
+    const index = todosPokemons.findIndex(p => p.id === id);
 
-    if (time.length === timeAtualizado.length) {
+    // Verifica se o pokémon existe e se pertence ao usuário
+    if (index >= 0 && todosPokemons[index].usuarioId === req.usuarioId) {
+        todosPokemons[index].apelido = apelido;
+        salvarNoBancoDeDados('time.json', todosPokemons);
+        res.json({ message: 'Apelido atualizado com sucesso!' });
+    } else {
+        res.status(404).json({ message: 'Pokémon não encontrado ou sem permissão.' });
+    }
+});
+
+// [D] DELETE - Remover Pokémon
+app.delete('/pokemons/:id', verificarToken, (req, res) => {
+    const { id } = req.params;
+    let todosPokemons = lerBancoDeDados('time.json');
+
+    const listaAtualizada = todosPokemons.filter(p => p.id !== id);
+
+    if (todosPokemons.length === listaAtualizada.length) {
         return res.status(404).json({ message: 'Pokémon não encontrado.' });
     }
 
-    salvarDados('time.json', timeAtualizado);
+    salvarNoBancoDeDados('time.json', listaAtualizada);
     res.json({ message: 'Pokémon removido do time.' });
 });
 
-// ATUALIZAR POKEMON (Update)
-app.put('/pokemons/:id', autenticar, (req, res) => {
-    const { id } = req.params;
-    const { apelido } = req.body;
-    let time = lerDados('time.json');
-    
-    const index = time.findIndex(p => p.id === id);
-    
-    if (index >= 0 && time[index].usuarioId === req.usuarioId) {
-        time[index].apelido = apelido;
-        salvarDados('time.json', time);
-        res.json({ message: 'Apelido atualizado!' });
-    } else {
-        res.status(404).json({ message: 'Erro ao atualizar.' });
-    }
-});
-
-// ATUALIZAR NOME DO USUÁRIO (Extra) - AGORA NO LUGAR CERTO!
-app.put('/usuario', autenticar, (req, res) => {
+// [EXTRA] UPDATE - Atualizar Nome do Usuário
+app.put('/usuario', verificarToken, (req, res) => {
     const { novoNome } = req.body;
-    let usuarios = lerDados('usuarios.json');
-    
-    const index = usuarios.findIndex(u => u.id === req.usuarioId);
-    
+    let listaUsuarios = lerBancoDeDados('usuarios.json');
+
+    const index = listaUsuarios.findIndex(u => u.id === req.usuarioId);
+
     if (index >= 0) {
-        usuarios[index].usuario = novoNome;
-        salvarDados('usuarios.json', usuarios);
-        res.json({ message: 'Nome atualizado com sucesso!' });
+        listaUsuarios[index].usuario = novoNome;
+        salvarNoBancoDeDados('usuarios.json', listaUsuarios);
+        res.json({ message: 'Nome de usuário atualizado!' });
     } else {
         res.status(404).json({ message: 'Usuário não encontrado.' });
     }
 });
 
-// INICIAR SERVIDOR
+// --- INICIALIZAÇÃO ---
 app.listen(PORT, () => {
-    console.log(`Servidor rodando na porta ${PORT}`);
+    console.log(`✅ Servidor rodando na porta ${PORT}`);
 });

@@ -10,5 +10,11 @@
     "usuario": "eu",
     "email": "gilmararibeiro.pedagogia@gmail.com",
     "senha": "1111"
+  },
+  {
+    "id": "501b8162-0171-4f88-b0ae-8ee736093250",
+    "usuario": "edu",
+    "email": "123@email.com",
+    "senha": "1234"
   }
 ]
