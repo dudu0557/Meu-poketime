@@ -51,6 +51,9 @@ npm install
 node server.js
 
 cd frontend
-npm install
+npm install![WhatsApp Image 2025-12-09 at 18 16 31](https://github.com/user-attachments/assets/1699b791-682f-478d-9e53-f2df9f621ee8)
+![WhatsApp Image 2025-12-09 at 18 15 58](https://github.com/user-attachments/assets/eda88f6a-9fe1-4a97-8e0c-93f3e1ea2250)
+![WhatsApp Image 2025-12-09 at 18 15 23](https://github.com/user-attachments/assets/a300e088-d6fe-4332-be6b-79d00321de2c)
+
 npm run dev
 ![Uploading image.png…]()
