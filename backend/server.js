@@ -175,6 +175,7 @@ app.delete('/pokemons/:id', verificarToken, (req, res) => {
         return res.status(404).json({ message: 'Pokémon não encontrado.' });
     }
 
+    
     salvarNoBancoDeDados('time.json', listaAtualizada);
     res.json({ message: 'Pokémon removido do time.' });
 });
