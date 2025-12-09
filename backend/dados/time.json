@@ -1,0 +1,93 @@
+[
+  {
+    "id": "6df297a1-c94c-4b22-a4ea-1ee1eb38ec2b",
+    "usuarioId": "b95b47e1-a225-4b37-b714-876d26363503",
+    "nome": "charizard",
+    "apelido": "charizard",
+    "imagem": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/6.png"
+  },
+  {
+    "id": "df3f8e35-7914-4794-b1a5-bf8bf230c539",
+    "usuarioId": "b95b47e1-a225-4b37-b714-876d26363503",
+    "nome": "pikachu",
+    "apelido": "pikachu",
+    "imagem": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png"
+  },
+  {
+    "id": "0e286f42-8366-43b8-9c63-98c8ca6b06cf",
+    "usuarioId": "b95b47e1-a225-4b37-b714-876d26363503",
+    "nome": "mew",
+    "apelido": "mew",
+    "imagem": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/151.png"
+  },
+  {
+    "id": "a6e4138e-56c5-4ec5-a9da-aa4dba2dc781",
+    "usuarioId": "b95b47e1-a225-4b37-b714-876d26363503",
+    "nome": "mewtwo",
+    "apelido": "mewtwo",
+    "imagem": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/150.png"
+  },
+  {
+    "id": "488a1bf0-d12a-4780-99da-052db50f26c2",
+    "usuarioId": "6421c985-05af-4b6f-a1be-867507e23164",
+    "nome": "muk",
+    "apelido": "muk",
+    "imagem": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/89.png"
+  },
+  {
+    "id": "64e7007d-1e0e-4faf-8d30-04e5c8523b40",
+    "usuarioId": "6421c985-05af-4b6f-a1be-867507e23164",
+    "nome": "shellder",
+    "apelido": "shellder",
+    "imagem": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/90.png"
+  },
+  {
+    "id": "147199e5-3a86-4f3e-b61c-0cc923173291",
+    "usuarioId": "6421c985-05af-4b6f-a1be-867507e23164",
+    "nome": "klefki",
+    "apelido": "klefki",
+    "imagem": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/707.png"
+  },
+  {
+    "id": "e309ec30-1b40-4472-93cb-6f1f76cb9a9e",
+    "usuarioId": "6421c985-05af-4b6f-a1be-867507e23164",
+    "nome": "ogerpon",
+    "apelido": "ogerpon",
+    "imagem": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1017.png"
+  },
+  {
+    "id": "5e2ad6a5-1829-490f-ad64-284251c97b08",
+    "usuarioId": "6421c985-05af-4b6f-a1be-867507e23164",
+    "nome": "raichu",
+    "apelido": "raichu",
+    "imagem": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/26.png"
+  },
+  {
+    "id": "35fb5be3-6755-4585-b5cd-62bf58a24d4d",
+    "usuarioId": "6421c985-05af-4b6f-a1be-867507e23164",
+    "nome": "charmander",
+    "apelido": "charmander",
+    "imagem": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png"
+  },
+  {
+    "id": "cf4989ee-b1ed-461d-a87a-4dc35a46ea3e",
+    "usuarioId": "b95b47e1-a225-4b37-b714-876d26363503",
+    "nome": "muk",
+    "apelido": "muk",
+    "imagem": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/89.png"
+  },
+  {
+    "id": "b7935136-911a-4ea2-b6a8-34ec15b05651",
+    "usuarioId": "b95b47e1-a225-4b37-b714-876d26363503",
+    "nome": "charmander",
+    "apelido": "charmander",
+    "imagem": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png"
+  },
+  {
+    "id": "1c87ebda-ce6f-492d-9647-58f194309622",
+    "usuarioId": "b95b47e1-a225-4b37-b714-876d26363503",
+    "nome": "bulbasaur",
+    "apelido": "bulbasaur",
+    "imagem": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png"
+  }
+]
