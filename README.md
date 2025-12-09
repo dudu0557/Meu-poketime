@@ -1,59 +1,56 @@
-# 🏆 Meu PokéTime - Gerenciador de Times Pokémon
+# 🔴 Meu PokéTime - Projeto Final de Web
 
-> Projeto Final desenvolvido para a disciplina de Programação Web (XDES03).
+Olá! 👋 Esse é o repositório do **meu** trabalho final da disciplina de **Programação Web (XDES03)**.
 
-## 📝 Sobre o Projeto
-Este é um sistema **Fullstack** desenvolvido como avaliação final. O objetivo do projeto é permitir que treinadores criem uma conta, façam login e gerenciem seu próprio time de Pokémons.
+Desenvolvi este projeto sozinho para criar um site completo (Fullstack) onde fosse possível criar uma conta e montar um time de Pokémons, salvando tudo direitinho. Tentei aplicar aqui tudo o que aprendi em aula sobre React e Node.js.
 
-A aplicação consome dados reais da **PokéAPI** (API externa) e salva as informações dos usuários e seus times em arquivos locais (JSON), simulando um banco de dados, conforme solicitado nos requisitos do trabalho.
+## 💡 O que o projeto faz?
 
-## 🛠️ Tecnologias Utilizadas
+Basicamente, é um gerenciador de times que eu criei.
+* Você cria sua conta (tem que colocar senha e tudo).
+* Faz o login (implementei Token para ficar seguro).
+* Pesquisa um Pokémon (o sistema busca lá na API oficial da Nintendo/PokeAPI).
+* Clica em "Capturar" e ele salva no seu time.
+* Se o time ficar cheio (6 ou mais), fiz a tela se ajeitar sozinha para caber tudo.
 
-### Frontend (Interface)
-* **React (Vite):** Framework principal.
-* **React Router Dom:** Para navegação entre telas (SPA) sem recarregar a página.
-* **Axios:** Para fazer as requisições HTTP (conectar com o backend e com a API externa).
-* **CSS3:** Estilização com Grid Layout responsivo e tema escuro.
+## 🛠️ O que eu usei para fazer
 
-### Backend (API)
-* **Node.js & Express:** Para criar o servidor e as rotas da API.
-* **File System (fs):** Para persistência de dados em arquivos `.json` (substituindo banco de dados SQL).
-* **JWT (JSON Web Token):** Para autenticação segura e proteção de rotas.
-* **CORS:** Para permitir a comunicação entre o frontend e o backend.
+Utilizei as ferramentas que estudei durante o semestre:
 
-## ✨ Funcionalidades
+* **Frontend (A tela):** Fiz com **React** e **Vite**. Usei também o **Axios** para conectar com a internet e o **React Router** para trocar de tela sem recarregar (SPA).
+* **Backend (O servidor):** Construí com **Node.js** e **Express**.
+* **Banco de Dados:** Como o professor pediu para não usar banco SQL complexo agora, optei por salvar os dados em arquivos `.json` usando o **File System (fs)** do Node.
+* **Estilos:** Criei um CSS com tema escuro (Dark Mode) e usei Grid para organizar os cards.
 
-* [x] **Cadastro e Login:** Criação de conta com validação de senha e e-mail único.
-* [x] **Autenticação:** Uso de Token JWT para garantir que apenas usuários logados acessem o sistema.
-* [x] **API Externa:** Busca de Pokémons em tempo real direto da PokéAPI.
-* [x] **CRUD Completo:**
-    * Adicionar Pokémon ao time.
-    * Visualizar lista de capturados.
-    * Editar apelido do Pokémon.
-    * Editar nome do treinador.
-    * Excluir Pokémon do time.
-* [x] **Layout Dinâmico:** A grade se ajusta automaticamente (2 ou 3 colunas) dependendo da quantidade de Pokémons.
+## 🚀 Como testar no seu computador
 
----
+Se você quiser rodar meu projeto, segue o passo a passo que preparei:
 
-## 🚀 Como Rodar o Projeto
+1. **Baixe o projeto:**
+   Primeiro, clona o repositório ou baixa o ZIP.
+   ```bash
+   git clone [https://github.com/dudu0557/Meu-poketime.git](https://github.com/dudu0557/Meu-poketime.git)
+   Ligue o Backend (Servidor): Abra a pasta backend no terminal.
 
-Pré-requisitos: Ter o **Node.js** e o **Git** instalados na máquina.
-
-### 1. Clonar o repositório
-Abra o terminal e rode:
-```bash
-git clone [https://github.com/dudu0557/Meu-poketime.git](https://github.com/dudu0557/Meu-poketime.git)
-cd Meu-poketime
-
-cd backend
+Instale as dependências:
 npm install
+Rode o servidor:
 node server.js
 
-cd frontend
-npm install![WhatsApp Image 2025-12-09 at 18 16 31](https://github.com/user-attachments/assets/1699b791-682f-478d-9e53-f2df9f621ee8)
-![WhatsApp Image 2025-12-09 at 18 15 58](https://github.com/user-attachments/assets/eda88f6a-9fe1-4a97-8e0c-93f3e1ea2250)
-![WhatsApp Image 2025-12-09 at 18 15 23](https://github.com/user-attachments/assets/a300e088-d6fe-4332-be6b-79d00321de2c)
+Importante: Crie uma pastinha chamada dados dentro da pasta backend (o git não enviou ela vazia).
 
+Ligue o Frontend (Site): Abra outro terminal na pasta frontend.
+
+Instale as coisas do React: 
+npm install
+Rode o site: 
 npm run dev
-![Uploading image.png…]()
+
+Aí é só abrir o link que aparecer (geralmente http://localhost:5173).
+
+![WhatsApp Image 2025-12-09 at 18 16 31](https://github.com/user-attachments/assets/25827624-7360-4980-97b2-83d048fddb65)
+![WhatsApp Image 2025-12-09 at 18 15 58](https://github.com/user-attachments/assets/76bda759-543a-458a-b28a-4da40a79772d)
+![WhatsApp Image 2025-12-09 at 18 15 23](https://github.com/user-attachments/assets/2cb5bc14-63b1-40a2-9e44-a0e42a613280)
+
+MArcus Eduardo Ribeiro
+
